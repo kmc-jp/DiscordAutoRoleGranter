@@ -44,7 +44,7 @@ func main() {
 	{
 		var intent = discordgo.IntentsGuildMembers
 		// In this example, we only care about receiving message events.
-		discord.Session.Identify.Intents = &intent
+		discord.Session.Identify.Intents = intent
 	}
 
 	// Open a websocket connection to Discord and begin listening.
