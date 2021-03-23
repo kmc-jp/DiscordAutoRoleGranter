@@ -38,8 +38,8 @@ func main() {
 		panic(err)
 	}
 
-	// Register the messageCreate func as a callback for MessageCreate events.
 	discord.Session.AddHandler(discord.addRole)
+	discord.Session.AddHandler(discord.removeRole)
 
 	{
 		var intent = discordgo.IntentsGuildMembers
