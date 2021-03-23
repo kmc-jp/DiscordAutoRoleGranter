@@ -30,7 +30,7 @@ $ go build
 ```json
 {
     "Discord": {
-        "RemoveRoleID": "*****************",
+        "RemoveTriggerRoleID": "*****************",
         "RoleID": "*****************",
         "GuildID": "******************",
         "Token": "DiscordBotToken"

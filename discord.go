@@ -19,7 +19,7 @@ func (d *discordHandler) removeRole(discord *discordgo.Session, event *discordgo
 	var check bool
 
 	for _, r := range event.Roles {
-		if r == Settings.Discord.RoleID {
+		if r == Settings.Discord.RemoveTriggerRoleID {
 			check = true
 			break
 		}
@@ -32,7 +32,7 @@ func (d *discordHandler) removeRole(discord *discordgo.Session, event *discordgo
 	err = discord.GuildMemberRoleRemove(
 		Settings.Discord.GuildID,
 		event.User.ID,
-		Settings.Discord.RemoveRoleID,
+		Settings.Discord.RoleID,
 	)
 
 	if err != nil {
