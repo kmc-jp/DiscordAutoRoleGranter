@@ -25,17 +25,11 @@ $ go build
 ```
 
 ## 設定
-次の内容を`settings.json`を、バイナリと同階層に配置する。
+環境変数を設定
 
-```json
-{
-    "Discord": {
-        "RemoveTriggerRoleID": [
-            "*****************"
-        ],
-        "RoleID": "*****************",
-        "GuildID": "******************",
-        "Token": "DiscordBotToken"
-    }
-}
+```
+DISCORD_TOKEN=***********
+DISCORD_GUILD_ID=***************
+DISCORD_TRIGGER_ROLES=*****************, *******************
+DISCORD_GUILD_ID=******************
 ```

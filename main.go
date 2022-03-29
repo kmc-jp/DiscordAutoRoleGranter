@@ -1,58 +1,39 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
-
-	"github.com/bwmarrin/discordgo"
 )
 
-var Settings Setting
-
-func init() {
-	var err error
-
-	b, err := ioutil.ReadFile(SettingsFilePath)
-	if err != nil {
-		panic(err)
-	}
-
-	err = json.Unmarshal(b, &Settings)
-	if err != nil {
-		panic(err)
-	}
-
-	if Settings.Discord.Token == "" {
-		fmt.Println("No token provided. Please run: airhorn -t <bot token>")
-		return
-	}
-}
-
 func main() {
-	discord, err := NewDiscord()
+	var settings = DiscordSetting{
+		Token:   os.Getenv("DISCORD_TOKEN"),
+		GuildID: os.Getenv("DISCORD_GUILD_ID"),
+		RoleID:  os.Getenv("DISCORD_ROLE_ID"),
+	}
+
+	var triggerRoles = []string{}
+
+	for _, r := range strings.Split(os.Getenv("DISCORD_TRIGGER_ROLES"), ",") {
+		triggerRoles = append(triggerRoles, strings.TrimSpace(r))
+	}
+
+	settings.RemoveTriggerRoleID = triggerRoles
+
+	discord, err := NewDiscord(settings)
 	if err != nil {
 		panic(err)
 	}
 
-	discord.Session.AddHandler(discord.addRole)
-	discord.Session.AddHandler(discord.removeRole)
-
-	{
-		var intent = discordgo.IntentsGuildMembers
-		// In this example, we only care about receiving message events.
-		discord.Session.Identify.Intents = intent
-	}
-
-	// Open a websocket connection to Discord and begin listening.
-	err = discord.Session.Open()
-	if err != nil {
-		fmt.Println("error opening connection,", err)
-		return
-	}
+	go func() {
+		err = discord.Start()
+		if err != nil {
+			panic(err)
+		}
+	}()
 
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
