@@ -29,7 +29,7 @@ $ go build
 
 ```
 DISCORD_TOKEN=***********
-DISCORD_GUILD_ID=***************
+DISCORD_ROLE_ID=***************
 DISCORD_TRIGGER_ROLES=*****************, *******************
 DISCORD_GUILD_ID=******************
 ```
