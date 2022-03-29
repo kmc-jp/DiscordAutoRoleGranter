@@ -7,6 +7,6 @@ type Setting struct {
 		Token               string
 		GuildID             string
 		RoleID              string
-		RemoveTriggerRoleID string
+		RemoveTriggerRoleID []string
 	}
 }
